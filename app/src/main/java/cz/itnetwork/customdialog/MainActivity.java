@@ -8,6 +8,9 @@ import android.widget.Button;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btnInfo;
@@ -16,6 +19,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnYesNo;
     Button btnInput;
     Button btnSelect;
+    Button btnCustomDatePicker;
+    Button btnCustomTimePicker;
+
+    CustomDialog.OnCustomDialogButtonClickListener listener = new CustomDialog.OnCustomDialogButtonClickListener() {
+        @Override
+        public void onCustomDialogOkClicked() {
+            showInfo("Stisknuto tlačítko OK");
+        }
+
+        @Override
+        public void onCustomDialogYesClicked() {
+            showInfo("Stisknuto tlačítko ANO");
+        }
+
+        @Override
+        public void onCustomDialogNoClicked() {
+            showInfo("Stisknuto tlačítko NE");
+        }
+
+        @Override
+        public void onCustomDialogInputInserted(String inputText) {
+            showInfo("Zadaný text: " + inputText);
+        }
+
+        @Override
+        public void onCustomDialogItemSelected(String selectedItem, int position) {
+            showInfo("Zvoleno: " + selectedItem + "\nPozice v poli: " + position);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnYesNo = findViewById(R.id.btnYesNo);
         btnInput = findViewById(R.id.btnInput);
         btnSelect = findViewById(R.id.btnSelect);
+        btnCustomDatePicker = findViewById(R.id.btnCustomDatePicker);
+        btnCustomTimePicker = findViewById(R.id.btnCustomTimePicker);
 
         btnInfo.setOnClickListener(this);
         btnWarn.setOnClickListener(this);
@@ -35,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnYesNo.setOnClickListener(this);
         btnInput.setOnClickListener(this);
         btnSelect.setOnClickListener(this);
+        btnCustomDatePicker.setOnClickListener(this);
+        btnCustomTimePicker.setOnClickListener(this);
     }
 
     private void showInfo(String text) {
@@ -55,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.setTitle("Info");
         dialog.setMessage("Toto je vlastní dialog s informační zprávou.");
         dialog.setIcon(R.drawable.ic_dialog_info);
+        dialog.setListener(listener);
         dialog.show();
     }
 
@@ -63,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.setTitle("Upozornění");
         dialog.setMessage("Toto je vlastní dialog s upozorněním.");
         dialog.setIcon(R.drawable.ic_dialog_warn);
+        dialog.setListener(listener);
         dialog.show();
     }
 
@@ -71,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.setTitle("Chyba");
         dialog.setMessage("Toto je vlastní chybový dialog.");
         dialog.setIcon(R.drawable.ic_dialog_error);
+        dialog.setListener(listener);
         dialog.show();
     }
 
@@ -79,33 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.setTitle("Odhálšení");
         dialog.setMessage("Opravdu se chcete odhlásit?");
         dialog.setIcon(R.drawable.ic_dialog_yes_no);
-
-        dialog.setListener(new CustomDialog.OnCustomDialogButtonClickListener() {
-            @Override
-            public void onCustomDialogOkClicked() {
-
-            }
-
-            @Override
-            public void onCustomDialogYesClicked() {
-                showInfo("Stisknuto ANO");
-            }
-
-            @Override
-            public void onCustomDialogNoClicked() {
-                showInfo("Stisknuto NE");
-            }
-
-            @Override
-            public void onCustomDialogInputInserted(String inputText) {
-
-            }
-
-            @Override
-            public void onCustomDialogItemSelected(String inputText, int position) {
-
-            }
-        });
+        dialog.setListener(listener);
         dialog.show();
     }
 
@@ -114,33 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.setTitle("Input");
         dialog.setMessage("Zadej nějaký text:");
         dialog.setIcon(R.drawable.ic_dialog_edit);
-
-        dialog.setListener(new CustomDialog.OnCustomDialogButtonClickListener() {
-            @Override
-            public void onCustomDialogOkClicked() {
-
-            }
-
-            @Override
-            public void onCustomDialogYesClicked() {
-
-            }
-
-            @Override
-            public void onCustomDialogNoClicked() {
-
-            }
-
-            @Override
-            public void onCustomDialogInputInserted(String inputText) {
-                showInfo("Zadaný text: " + inputText);
-            }
-
-            @Override
-            public void onCustomDialogItemSelected(String inputText, int position) {
-
-            }
-        });
+        dialog.setListener(listener);
         dialog.show();
     }
 
@@ -168,34 +155,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 "Patnáctá položka"};
 
         dialog.setItems(items);
+        dialog.setListener(listener);
+        dialog.show();
+    }
 
-        dialog.setListener(new CustomDialog.OnCustomDialogButtonClickListener() {
+    /*
+    Zobrazení vlastního dialogu s nastavením data.
+    */
+    public void showCustomDatePicker() {
+        CustomDatePicker datePicker = new CustomDatePicker(this, new Date());
+
+        datePicker.setListener(new CustomDatePicker.OnDateSelectedListener() {
             @Override
-            public void onCustomDialogOkClicked() {
-
-            }
-
-            @Override
-            public void onCustomDialogYesClicked() {
-
-            }
-
-            @Override
-            public void onCustomDialogNoClicked() {
-
-            }
-
-            @Override
-            public void onCustomDialogInputInserted(String inputText) {
-
-            }
-
-            @Override
-            public void onCustomDialogItemSelected(String selectedItem, int position) {
-                showInfo("Zvoleno: " + selectedItem + "\nPozice v poli: " + position);
+            public void onDateSelected(Date date) {
+                SimpleDateFormat sdf = new SimpleDateFormat("d.MMMM y");
+                String dateToString = sdf.format(date);
+                showInfo(dateToString);
             }
         });
-        dialog.show();
+
+        datePicker.show();
+    }
+
+    /*
+    Zobrazení vlastního dialogu s nastavením času.
+    */
+    public void showCustomTimePicker() {
+        CustomTimePicker timePicker = new CustomTimePicker(this, new Date());
+
+        timePicker.setListener(new CustomTimePicker.OnTimeSelectedListener() {
+            @Override
+            public void onTimeSelected(Date time) {
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                String dateToString = sdf.format(time);
+                showInfo(dateToString);
+            }
+        });
+
+        timePicker.show();
     }
 
     @Override
@@ -218,6 +215,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnSelect:
                 showCustomDialogSelect();
+                break;
+            case R.id.btnCustomDatePicker:
+                showCustomDatePicker();
+                break;
+            case R.id.btnCustomTimePicker:
+                showCustomTimePicker();
                 break;
         }
     }

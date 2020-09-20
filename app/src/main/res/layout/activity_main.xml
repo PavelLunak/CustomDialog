@@ -69,4 +69,25 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnInput"
         app:layout_constraintTop_toTopOf="@+id/btnInput" />
+
+    <Button
+        android:id="@+id/btnCustomDatePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Datum"
+        app:layout_constraintEnd_toStartOf="@+id/btnCustomTimePicker"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnYesNo" />
+
+    <Button
+        android:id="@+id/btnCustomTimePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Čas"
+        app:layout_constraintBottom_toBottomOf="@+id/btnCustomDatePicker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnCustomDatePicker"
+        app:layout_constraintTop_toTopOf="@+id/btnCustomDatePicker" />
 </androidx.constraintlayout.widget.ConstraintLayout>
