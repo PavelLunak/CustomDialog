@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Info"
+        app:layout_constraintEnd_toStartOf="@+id/btnWarn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnWarn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Upozornění"
+        app:layout_constraintBottom_toBottomOf="@+id/btnInfo"
+        app:layout_constraintEnd_toStartOf="@+id/btnError"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnInfo"
+        app:layout_constraintTop_toTopOf="@+id/btnInfo" />
+
+    <Button
+        android:id="@+id/btnError"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Chyba"
+        app:layout_constraintBottom_toBottomOf="@+id/btnWarn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnWarn"
+        app:layout_constraintTop_toTopOf="@+id/btnWarn" />
+
+    <Button
+        android:id="@+id/btnYesNo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ano Ne"
+        app:layout_constraintEnd_toStartOf="@+id/btnInput"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnInfo" />
+
+    <Button
+        android:id="@+id/btnInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Zadání"
+        app:layout_constraintBottom_toBottomOf="@+id/btnYesNo"
+        app:layout_constraintEnd_toStartOf="@+id/btnSelect"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnYesNo"
+        app:layout_constraintTop_toTopOf="@+id/btnYesNo" />
+
+    <Button
+        android:id="@+id/btnSelect"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Výběr"
+        app:layout_constraintBottom_toBottomOf="@+id/btnInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnInput"
+        app:layout_constraintTop_toTopOf="@+id/btnInput" />
+</androidx.constraintlayout.widget.ConstraintLayout>
