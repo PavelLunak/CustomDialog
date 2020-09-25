@@ -32,9 +32,12 @@ public class CustomDialog extends Dialog {
     TextView btnRight;
 
     // Barvy hlavičky dialogu
-    int colorInfo = 0xFF0098D6;     // Modrá
-    int colorWarn = 0xFFD67A00;     // Oranžová
-    int colorError = 0xFFD60000;    // Červená
+    final int colorInfo = 0xFF0098D6;     // Modrá
+    final int colorWarn = 0xFFD67A00;     // Oranžová
+    final int colorError = 0xFFD60000;    // Červená
+    final int colorYesNo = 0xFFA21F96;    // Fialová
+    final int colorInput = 0xFFA75700;    // Hnědá
+    final int colorSelect = 0xFFC0BC13;    // Žlutá
 
     @DrawableRes
     int iconId;
@@ -192,10 +195,12 @@ public class CustomDialog extends Dialog {
         this.iconId = iconId;
     }
 
+    public void setListener(OnCustomDialogButtonClickListener listener) {
+        this.listener = listener;
+    }
+
     private void setDialogColor() {
         switch (dialogType) {
-            case YES_NO:
-            case INPUT:
             case INFO:
                 color = colorInfo;
                 break;
@@ -205,13 +210,18 @@ public class CustomDialog extends Dialog {
             case ERROR:
                 color = colorError;
                 break;
+            case YES_NO:
+                color = colorYesNo;
+                break;
+            case INPUT:
+                color = colorInput;
+                break;
+            case SELECT:
+                color = colorSelect;
+                break;
         }
 
         header.setBackgroundColor(color);
-    }
-
-    public void setListener(OnCustomDialogButtonClickListener listener) {
-        this.listener = listener;
     }
 
     public interface OnCustomDialogButtonClickListener {
