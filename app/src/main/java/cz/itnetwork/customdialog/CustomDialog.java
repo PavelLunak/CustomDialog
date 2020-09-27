@@ -44,7 +44,7 @@ public class CustomDialog extends Dialog {
 
     String title;
     String message;
-    String[] items = new String[] {"no items!"};
+    String[] items = new String[] {""};
 
     // Defaultní typ dialogu
     DialogType dialogType = DialogType.INFO;
@@ -63,7 +63,6 @@ public class CustomDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog);
 
         header = findViewById(R.id.header);
@@ -191,7 +190,7 @@ public class CustomDialog extends Dialog {
         this.items = items;
     }
 
-    public void setIcon(int iconId) {
+    public void setIcon(@DrawableRes int iconId) {
         this.iconId = iconId;
     }
 
