@@ -52,7 +52,7 @@ public class CustomDialog extends Dialog {
     // Defaultní barva dialogu
     int color = colorInfo;
 
-    OnCustomDialogButtonClickListener listener;
+    OnCustomDialogListener listener;
 
 
     public CustomDialog(Context context, DialogType type) {
@@ -194,7 +194,7 @@ public class CustomDialog extends Dialog {
         this.iconId = iconId;
     }
 
-    public void setListener(OnCustomDialogButtonClickListener listener) {
+    public void setListener(OnCustomDialogListener listener) {
         this.listener = listener;
     }
 
@@ -223,7 +223,7 @@ public class CustomDialog extends Dialog {
         header.setBackgroundColor(color);
     }
 
-    public interface OnCustomDialogButtonClickListener {
+    public interface OnCustomDialogListener {
         void onCustomDialogOkClicked();
         void onCustomDialogYesClicked();
         void onCustomDialogNoClicked();

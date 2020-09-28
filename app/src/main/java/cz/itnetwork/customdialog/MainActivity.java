@@ -1,5 +1,6 @@
 package cz.itnetwork.customdialog;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -9,20 +10,13 @@ import android.widget.Button;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnInfo;
-    Button btnWarn;
-    Button btnError;
-    Button btnYesNo;
-    Button btnInput;
-    Button btnSelect;
-    Button btnCustomDatePicker;
-    Button btnCustomTimePicker;
-
-    CustomDialog.OnCustomDialogButtonClickListener listener = new CustomDialog.OnCustomDialogButtonClickListener() {
+    final CustomDialog.OnCustomDialogListener listener = new CustomDialog.OnCustomDialogListener() {
         @Override
         public void onCustomDialogOkClicked() {
             showInfo("Stisknuto tlačítko OK");
@@ -54,28 +48,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnInfo = findViewById(R.id.btnInfo);
-        btnWarn = findViewById(R.id.btnWarn);
-        btnError = findViewById(R.id.btnError);
-        btnYesNo = findViewById(R.id.btnYesNo);
-        btnInput = findViewById(R.id.btnInput);
-        btnSelect = findViewById(R.id.btnSelect);
-        btnCustomDatePicker = findViewById(R.id.btnCustomDatePicker);
-        btnCustomTimePicker = findViewById(R.id.btnCustomTimePicker);
-
-        btnInfo.setOnClickListener(this);
-        btnWarn.setOnClickListener(this);
-        btnError.setOnClickListener(this);
-        btnYesNo.setOnClickListener(this);
-        btnInput.setOnClickListener(this);
-        btnSelect.setOnClickListener(this);
-        btnCustomDatePicker.setOnClickListener(this);
-        btnCustomTimePicker.setOnClickListener(this);
+        (findViewById(R.id.btnInfo)).setOnClickListener(this);
+        (findViewById(R.id.btnWarn)).setOnClickListener(this);
+        (findViewById(R.id.btnError)).setOnClickListener(this);
+        (findViewById(R.id.btnYesNo)).setOnClickListener(this);
+        (findViewById(R.id.btnInput)).setOnClickListener(this);
+        (findViewById(R.id.btnSelect)).setOnClickListener(this);
+        (findViewById(R.id.btnCustomDatePicker)).setOnClickListener(this);
+        (findViewById(R.id.btnCustomTimePicker)).setOnClickListener(this);
     }
 
     private void showInfo(String text) {
         Snackbar snackbar = Snackbar
-                .make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
+                .make(findViewById(android.R.id.content), text, Snackbar.LENGTH_INDEFINITE)
                 .setTextColor(getResources().getColor(R.color.snackbar_text_color))
                 .setAction("Zavřít", new View.OnClickListener() {
                     @Override
@@ -86,76 +71,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         snackbar.show();
     }
 
-    public void showCustomDialogInfo() {
-        CustomDialog dialog = new CustomDialog(this, CustomDialog.DialogType.INFO);
-        dialog.setTitle("Info");
-        dialog.setMessage("Toto je vlastní dialog s informační zprávou.");
-        dialog.setIcon(R.drawable.ic_dialog_info);
+    public void showDialog(
+            CustomDialog.DialogType type,
+            String title,
+            String message,
+            @DrawableRes int icon,
+            CustomDialog.OnCustomDialogListener listener,
+            String[] items) {
+
+        CustomDialog dialog = new CustomDialog(this, type);
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        dialog.setIcon(icon);
         dialog.setListener(listener);
-        dialog.show();
-    }
-
-    public void showCustomDialogWarn() {
-        CustomDialog dialog = new CustomDialog(this, CustomDialog.DialogType.WARN);
-        dialog.setTitle("Upozornění");
-        dialog.setMessage("Toto je vlastní dialog s upozorněním.");
-        dialog.setIcon(R.drawable.ic_dialog_warn);
-        dialog.setListener(listener);
-        dialog.show();
-    }
-
-    public void showCustomDialogError() {
-        CustomDialog dialog = new CustomDialog(this, CustomDialog.DialogType.ERROR);
-        dialog.setTitle("Chyba");
-        dialog.setMessage("Toto je vlastní chybový dialog.");
-        dialog.setIcon(R.drawable.ic_dialog_error);
-        dialog.setListener(listener);
-        dialog.show();
-    }
-
-    public void showCustomDialogYesNo() {
-        CustomDialog dialog = new CustomDialog(this, CustomDialog.DialogType.YES_NO);
-        dialog.setTitle("Odhálšení");
-        dialog.setMessage("Opravdu se chcete odhlásit?");
-        dialog.setIcon(R.drawable.ic_dialog_yes_no);
-        dialog.setListener(listener);
-        dialog.show();
-    }
-
-    public void showCustomDialogInput() {
-        CustomDialog dialog = new CustomDialog(this, CustomDialog.DialogType.INPUT);
-        dialog.setTitle("Input");
-        dialog.setMessage("Zadej nějaký text:");
-        dialog.setIcon(R.drawable.ic_dialog_edit);
-        dialog.setListener(listener);
-        dialog.show();
-    }
-
-    public void showCustomDialogSelect() {
-        CustomDialog dialog = new CustomDialog(this, CustomDialog.DialogType.SELECT);
-        dialog.setTitle("Výběr");
-        dialog.setMessage("Vyber položku:");
-        dialog.setIcon(R.drawable.ic_dialog_select);
-
-        String[] items = new String[] {
-                "První položka",
-                "Druhá položka",
-                "Třetí položka",
-                "Čtvrtá položka",
-                "Pátá položka",
-                "Šestá položka",
-                "Sedmá položka",
-                "Osmá položka",
-                "Devátá položka",
-                "Desátá položka",
-                "Jedenáctá položka",
-                "Dvanáctá položka",
-                "Třináctá položka",
-                "Čtrnáctá položka",
-                "Patnáctá položka"};
-
         dialog.setItems(items);
-        dialog.setListener(listener);
         dialog.show();
     }
 
@@ -163,9 +92,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Zobrazení vlastního dialogu s nastavením data.
     */
     public void showCustomDatePicker() {
-        CustomDatePicker datePicker = new CustomDatePicker(this, new Date());
+        CustomDatePicker dialog = new CustomDatePicker(this, new Date());
 
-        datePicker.setListener(new CustomDatePicker.OnDateSelectedListener() {
+        Calendar c = new GregorianCalendar();
+        c.set(Calendar.DAY_OF_MONTH, 15);
+        c.set(Calendar.MONTH, 7);
+        c.set(Calendar.YEAR, 2020);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+
+        dialog.setMinDate(c.getTimeInMillis());
+
+        dialog.setListener(new CustomDatePicker.OnDateSelectedListener() {
             @Override
             public void onDateSelected(Date date) {
                 SimpleDateFormat sdf = new SimpleDateFormat("d.MMMM y");
@@ -174,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        datePicker.show();
+        dialog.show();
     }
 
     /*
@@ -199,22 +139,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnInfo:
-                showCustomDialogInfo();
+                showDialog(CustomDialog.DialogType.INFO, "Info", "Toto je vlastní dialog s informační zprávou.", R.drawable.ic_dialog_info, listener, null);
                 break;
             case R.id.btnWarn:
-                showCustomDialogWarn();
+                showDialog(CustomDialog.DialogType.WARN, "Upozornění", "Toto je vlastní dialog s upozorněním.", R.drawable.ic_dialog_warn, listener, null);
                 break;
             case R.id.btnError:
-                showCustomDialogError();
+                showDialog(CustomDialog.DialogType.ERROR, "Chyba", "Toto je vlastní chybový dialog.", R.drawable.ic_dialog_error, listener, null);
                 break;
             case R.id.btnYesNo:
-                showCustomDialogYesNo();
+                showDialog(CustomDialog.DialogType.YES_NO, "Odhlášení", "Opravdu se chcete odhlásit?", R.drawable.ic_dialog_yes_no, listener, null);
                 break;
             case R.id.btnInput:
-                showCustomDialogInput();
+                showDialog(CustomDialog.DialogType.INPUT, "Input", "Zadej nějaký text:", R.drawable.ic_dialog_edit, listener, null);
                 break;
             case R.id.btnSelect:
-                showCustomDialogSelect();
+                String[] items = new String[] {
+                        "První položka",
+                        "Druhá položka",
+                        "Třetí položka",
+                        "Čtvrtá položka",
+                        "Pátá položka",
+                        "Šestá položka",
+                        "Sedmá položka",
+                        "Osmá položka",
+                        "Devátá položka",
+                        "Desátá položka",
+                        "Jedenáctá položka",
+                        "Dvanáctá položka",
+                        "Třináctá položka",
+                        "Čtrnáctá položka",
+                        "Patnáctá položka"};
+
+                showDialog(CustomDialog.DialogType.SELECT, "Výběr", "Vyber položku:", R.drawable.ic_dialog_select, listener, items);
                 break;
             case R.id.btnCustomDatePicker:
                 showCustomDatePicker();

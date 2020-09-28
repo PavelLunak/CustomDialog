@@ -34,7 +34,6 @@ public class CustomTimePicker extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_time_picker);
 
         timePicker = findViewById(R.id.timePicker);
@@ -90,6 +89,6 @@ public class CustomTimePicker extends Dialog {
     }
 
     public interface OnTimeSelectedListener {
-        public void onTimeSelected(Date time);
+        void onTimeSelected(Date time);
     }
 }

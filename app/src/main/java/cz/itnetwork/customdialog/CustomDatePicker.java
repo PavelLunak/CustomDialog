@@ -36,7 +36,6 @@ public class CustomDatePicker extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_date_picker);
 
         datePicker = findViewById(R.id.datePicker);
@@ -99,6 +98,6 @@ public class CustomDatePicker extends Dialog {
     }
 
     public interface OnDateSelectedListener {
-        public void onDateSelected(Date date);
+        void onDateSelected(Date date);
     }
 }
