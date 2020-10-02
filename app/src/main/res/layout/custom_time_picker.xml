@@ -8,11 +8,7 @@
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFF9EC"
-        android:headerBackground="#C59836"
-        android:numbersBackgroundColor="#C59836"
-        android:numbersSelectorColor="#FFF9EC"
-        android:numbersTextColor="#423007"
+        android:layout_centerHorizontal="true"
         android:timePickerMode="clock" />
 
     <Button

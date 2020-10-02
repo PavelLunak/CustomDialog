@@ -8,10 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="#FFF9EC"
-        android:calendarTextColor="#423007"
-        android:datePickerMode="calendar"
-        android:headerBackground="#C59836" />
+        android:datePickerMode="calendar" />
 
     <Button
         android:id="@+id/btnOk"
